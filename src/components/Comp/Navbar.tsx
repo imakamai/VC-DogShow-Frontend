@@ -20,16 +20,13 @@ const Navbar: React.FC = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ms-auto">
                     <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="#">Home</a>
+                        <a className="nav-link" href="/login">Login</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">About Us</a>
+                        <a className="nav-link" href="/register">Register</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Rules</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Contact</a>
+                        <a className="nav-link" href="/dog-form">Dog Form</a>
                     </li>
                 </ul>
             </div>
