@@ -20,13 +20,36 @@ const Navbar: React.FC = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ms-auto">
                     <li className="nav-item">
+                        <a className="nav-link" href="/">Home page</a>
+                    </li>
+                    <li className="nav-item">
                         <a className="nav-link" href="/login">Login</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="/register">Register</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/dog-form">Dog Form</a>
+                    <li className="nav-item dropdown">
+                        <a
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            id="informationDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Information
+                        </a>
+                        <ul className="dropdown-menu" aria-labelledby="informationDropdown">
+                            <li>
+                                <a className="dropdown-item" href="/dogform">Dog Form</a>
+                            </li>
+                            <li>
+                                <a className="dropdown-item" href="/about">About</a>
+                            </li>
+                            <li>
+                                <a className="dropdown-item" href="/contact">Contact</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
