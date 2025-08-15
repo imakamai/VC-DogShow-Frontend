@@ -44,6 +44,9 @@ const Navbar: React.FC = () => {
                                 <a className="dropdown-item" href="/dogform">Dog Form</a>
                             </li>
                             <li>
+                                <a className="dropdown-item" href="/pricelist">Service Price List</a>
+                            </li>
+                            <li>
                                 <a className="dropdown-item" href="/about">About</a>
                             </li>
                             <li>

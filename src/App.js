@@ -5,6 +5,7 @@ import LoginPage from "./components/Auth Pages/LoginPage";
 import RegisterPage from "./components/Auth Pages/RegisterPage";
 import MainPage from "./components/Main Page/MainPage";
 import DogFormForShow from "./components/Information/Forms/DogFormForShow";
+import PriceList from "./components/Information/Service price/PriceList";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dogform" element={<DogFormForShow />} />
+            <Route path="/pricelist" element={<PriceList />} />
         </Routes>
       </Router>
   );
