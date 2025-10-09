@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^3.24.2",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.10.0",
     "bootstrap": "^5.3.7",
+    "framer-motion": "^12.23.12",
     "react": "^19.1.0",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
     "react-scripts": "5.0.1",
@@ -40,8 +45,10 @@
     ]
   },
   "devDependencies": {
+    "@types/antd": "^0.12.32",
     "@types/axios": "^0.9.36",
     "@types/react": "^19.1.8",
+    "@types/react-bootstrap": "^1.0.1",
     "@types/react-dom": "^19.1.6"
   }
 }
