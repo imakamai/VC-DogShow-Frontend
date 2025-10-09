@@ -6,7 +6,7 @@ import RegisterPage from "./components/Auth Pages/RegisterPage";
 import MainPage from "./components/Main Page/MainPage";
 import DogFormForShow from "./components/Information/Forms/DogFormForShow";
 import PriceList from "./components/Information/Service price/PriceList";
-import UserProfile from "./components/Profile/UserProfile";
+import UserProfilePage from "./components/Profile/UserProfilePage";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dogform" element={<DogFormForShow />} />
             <Route path="/pricelist" element={<PriceList />} />
-            <Route path="/userprofile" element={<UserProfile />} />
+            <Route path="/userprofile" element={<UserProfilePage />} />
         </Routes>
       </Router>
   );
