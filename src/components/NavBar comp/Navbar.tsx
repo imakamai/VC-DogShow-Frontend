@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import './Navbar.css';
+import logo from '../../img/main/ChatGPT_Image_Oct_11__2025__02_43_04_PM-removebg-preview.png';
 
 const Navbar: React.FC = () => {
     const navigate = useNavigate();
@@ -32,8 +34,13 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4">
-            <Link className="navbar-brand fw-bold text-primary" to="/">
-                DogShow
+            <Link className="navbar-brand fw-bold text-primary d-flex align-items-center" to="/">
+                <img
+                    src={logo}
+                    alt="DogShow Logo"
+                    className="navbar-logo me-2"
+                />
+                {/*<span>DogShow</span>*/}
             </Link>
             <button
                 className="navbar-toggler"

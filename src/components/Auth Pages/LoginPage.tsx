@@ -7,11 +7,13 @@ const LoginPage: React.FC = () => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
+        setIsLoading(true);
 
         try {
             const response = await api.post<string>("User/login", { userName, password });
@@ -27,6 +29,8 @@ const LoginPage: React.FC = () => {
             } else {
                 setError("An unexpected error occurred. Please try again later.");
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -54,7 +58,13 @@ const LoginPage: React.FC = () => {
                     required
                 />
             </div>
-            <button type="submit" className="btn btn-primary w-100">Login</button>
+            <button
+                type="submit"
+                className="btn btn-primary w-100"
+                disabled={isLoading}
+            >
+                {isLoading ? "Logging in..." : "Login"}
+            </button>
             <div className="text-center mt-3">
                 <span>Don't have an account? </span>
                 <button
