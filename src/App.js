@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import {Provider} from "./components/ui/provider";
@@ -9,8 +9,14 @@ import MainPage from "./components/Main Page/MainPage";
 import DogFormForShow from "./components/Information/Forms/DogFormForShow";
 import PriceList from "./components/Information/Service price/PriceList";
 import UserProfilePage from "./components/Profile/UserProfilePage";
+import AuthGuard from "./components/Utils/AuthGuard.js";
 
 function App() {
+
+    useEffect(() => {
+        localStorage.removeItem('authToken');
+    }, []);
+
     return (
         <Provider>
             <Router>
@@ -18,6 +24,14 @@ function App() {
                     <Route path="/" element={<MainPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <AuthGuard>
+                                <MainPage />
+                            </AuthGuard>
+                        }
+                    />
                     <Route path="/dogform" element={<DogFormForShow />} />
                     <Route path="/pricelist" element={<PriceList />} />
                     <Route path="/userprofile" element={<UserProfilePage />} />
