@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import Navbar from '../NavBar comp/Navbar';
+import './UserProfilePage.css';
 
 interface User {
     id: string;
@@ -20,115 +22,158 @@ const UserProfilePage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [updatedUser, setUpdatedUser] = useState<User | null>(null);
+    const [editedUser, setEditedUser] = useState<User | null>(null);
+    const navigate = useNavigate();
+    const [showNotLoggedInMessage, setShowNotLoggedInMessage] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const response = await api.get<User>('User/my');
                 setUser(response.data);
-                setUpdatedUser(response.data);
             } catch (err: any) {
-                setError(err.response?.data || 'Failed to fetch user data');
+                if (err.response?.status === 401) {
+                    setShowNotLoggedInMessage(true);
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 2000); // Show the message for 2 seconds before redirecting
+                } else {
+                    setError(err.response?.data || 'Failed to fetch user data');
+                }
             } finally {
                 setLoading(false);
             }
         };
-
         fetchUserData();
-    }, []);
+    }, [navigate]);
 
-    const handleUpdate = async () => {
-        try {
-            if (updatedUser) {
-                await api.put('User/my', updatedUser);
-                setUser(updatedUser);
-                setIsEditing(false);
-            }
-        } catch (err) {
-            alert('Failed to update user data');
+    if (showNotLoggedInMessage) {
+        return <div>User is not logged in. Redirecting to login page...</div>;
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (editedUser) {
+            setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
         }
     };
 
-    const handleDelete = async () => {
-        if (window.confirm('Are you sure you want to delete your account?')) {
+    const saveChanges = async () => {
+        if (editedUser) {
             try {
-                await api.delete('User/my');
-                alert('Account deleted successfully');
+                await api.put(`User/${editedUser.id}`, editedUser);
+                setUser(editedUser);
+                setIsEditing(false);
+            } catch (err) {
+                alert('Failed to save changes.');
+            }
+        }
+    };
+
+    const deleteUser = async () => {
+        if (user) {
+            try {
+                await api.delete(`User/${user.id}`);
+                alert('User deleted successfully.');
                 setUser(null);
             } catch (err) {
-                alert('Failed to delete account');
+                alert('Failed to delete user.');
             }
         }
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
-    if (!user) {
-        return <div>No user data available</div>;
-    }
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+    if (!user) return <div>No user data available</div>;
 
     return (
-        <div>
-            <Navbar />
-            <div style={{ maxWidth: '400px', margin: '20px auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)' }}>
-                <h2 style={{ textAlign: 'center' }}>User Profile</h2>
-                <p><strong>Username:</strong> {user.username || ''}</p>
-                <p><strong>Name:</strong> {user.name || ''} {user.lastName || ''}</p>
-                <p><strong>Email:</strong> {user.email || ''}</p>
-                <p><strong>Phone:</strong> {user.phone || ''}</p>
-                <p><strong>Address:</strong> {user.address || ''}</p>
-                <p><strong>City:</strong> {user.city || ''}</p>
-                <p><strong>Postal Code:</strong> {user.postalCode || ''}</p>
-                <p><strong>State:</strong> {user.state || ''}</p>
-                <button onClick={() => setIsEditing(true)} style={{ marginRight: '10px' }}>Edit</button>
-                <button onClick={handleDelete} style={{ backgroundColor: 'red', color: 'white' }}>Delete Account</button>
-            </div>
+        <div className="user-profile-page">
+            <Navbar/>
 
-            {isEditing && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 1000
-                }}>
-                    <div style={{
-                        backgroundColor: 'white',
-                        padding: '20px',
-                        borderRadius: '8px',
-                        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-                        width: '90%',
-                        maxWidth: '500px'
-                    }}>
-                        <h3>Edit Profile</h3>
-                        <input type="text" placeholder="Username" value={updatedUser?.username || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, username: e.target.value })} />
-                        <input type="text" placeholder="Name" value={updatedUser?.name || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, name: e.target.value })} />
-                        <input type="text" placeholder="Last Name" value={updatedUser?.lastName || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, lastName: e.target.value })} />
-                        <input type="email" placeholder="Email" value={updatedUser?.email || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, email: e.target.value })} />
-                        <input type="text" placeholder="Phone" value={updatedUser?.phone || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, phone: e.target.value })} />
-                        <input type="text" placeholder="Address" value={updatedUser?.address || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, address: e.target.value })} />
-                        <input type="text" placeholder="City" value={updatedUser?.city || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, city: e.target.value })} />
-                        <input type="text" placeholder="Postal Code" value={updatedUser?.postalCode || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, postalCode: e.target.value })} />
-                        <input type="text" placeholder="State" value={updatedUser?.state || ''} onChange={(e) => setUpdatedUser({ ...updatedUser!, state: e.target.value })} />
-                        <div style={{ marginTop: '10px' }}>
-                            <button onClick={handleUpdate} style={{ marginRight: '10px' }}>Save</button>
-                            <button onClick={() => setIsEditing(false)}>Cancel</button>
+            {/* === Basic info === */}
+            <section className="user-section">
+                <h3 className="section-title">My Information</h3>
+                <div className="info-container">
+                    <div className="info-bubble">
+                        <div className="user-avatar"></div>
+                        <div className="user-details">
+                            <p><strong>Full Name:</strong> {user.name} {user.lastName}</p>
+                            <p><strong>Email:</strong> {user.email}</p>
+                            <p><strong>Username:</strong> {user.username}</p>
                         </div>
+                    </div>
+
+                    <div className="action-bubble">
+                        <button onClick={() => setIsEditing(true)}>Edit</button>
+                        <button onClick={deleteUser} className="delete-btn">Delete</button>
+                    </div>
+                </div>
+            </section>
+
+            {/* === Address info === */}
+            <section className="user-section second">
+                <h3 className="section-title">Address Information</h3>
+                <div className="info-container large">
+                    <div className="info-bubble second">
+                        <p><strong>Phone:</strong> {user.phone || '—'}</p>
+                        <p><strong>Address:</strong> {user.address || '—'}</p>
+                        <p><strong>City:</strong> {user.city || '—'}</p>
+                        <p><strong>Postal Code:</strong> {user.postalCode || '—'}</p>
+                        <p><strong>State:</strong> {user.state || '—'}</p>
+                    </div>
+                </div>
+
+                {/* === Card info === */}
+                <h4 className="section-subtitle">Card info.</h4>
+                <div className="info-container small">
+                    <div className="info-bubble second">
+                        <p><strong>Cardholder Name:</strong> ———</p>
+                        <p><strong>Card Number:</strong> ———</p>
+                        <p><strong>Expiry Date:</strong> ———</p>
+                        <p><strong>CVV:</strong> —</p>
+                    </div>
+
+                    <div className="action-bubble">
+                        <button>Edit</button>
+                        <button>Logout</button>
+                        <button className="delete-btn">Delete</button>
+                    </div>
+                </div>
+            </section>
+
+            {/* === Edit Bubble === */}
+            {isEditing && (
+                <div className="edit-bubble">
+                <h3>Edit Information</h3>
+                    <label>
+                        Full Name: <input type="text" name="name" value={editedUser?.name || ''} onChange={handleInputChange} />
+                    </label>
+                    <label>
+                        Last Name: <input type="text" name="lastName" value={editedUser?.lastName || ''} onChange={handleInputChange} />
+                    </label>
+                    <label>
+                        Email: <input type="text" name="email" value={editedUser?.email || ''} onChange={handleInputChange} />
+                    </label>
+                    <label>
+                        Username: <input type="text" name="username" value={editedUser?.username || ''} onChange={handleInputChange} />
+                    </label>
+                    <div className="edit-actions">
+                        <button onClick={saveChanges}>Save</button>
+                        <button onClick={() => setIsEditing(false)}>Cancel</button>
                     </div>
                 </div>
             )}
+
+            {/* === Footer === */}
+            {/*<section className="contact-section">*/}
+            {/*    <div className="contact-box">*/}
+            {/*        <h3>Contact</h3>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
+            <footer className="footer-section">
+                <div className="footer-box">
+                    <h3>Contact</h3>
+                </div>
+            </footer>
         </div>
     );
 };
