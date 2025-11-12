@@ -6,7 +6,7 @@ import {Provider} from "./components/ui/provider";
 import LoginPage from "./components/Auth Pages/LoginPage";
 import RegisterPage from "./components/Auth Pages/RegisterPage";
 import MainPage from "./components/Main Page/MainPage";
-import DogFormForShow from "./components/Information/Forms/DogFormForShow";
+// import DogFormForShow from "./components/Information/Forms/DogFormForShow";
 import PriceList from "./components/Information/Service price/PriceList";
 import UserProfilePage from "./components/Profile/UserProfilePage";
 import AuthGuard from "./components/Utils/AuthGuard.js";
@@ -32,7 +32,7 @@ function App() {
                             </AuthGuard>
                         }
                     />
-                    <Route path="/dogform" element={<DogFormForShow />} />
+                    {/*<Route path="/dogform" element={<DogFormForShow />} />*/}
                     <Route path="/pricelist" element={<PriceList />} />
                     <Route path="/userprofile" element={<UserProfilePage />} />
                 </Routes>

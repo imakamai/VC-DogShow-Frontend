@@ -22,6 +22,8 @@ const UserProfilePage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [isEditingAddressInfo, setIsEditingAddressInfo] = useState<boolean>(false);
+    const [editedUserAddressInfo, setEditedUserAddressInfo] = useState<User | null>(null);
     const [editedUser, setEditedUser] = useState<User | null>(null);
     const navigate = useNavigate();
     const [showNotLoggedInMessage, setShowNotLoggedInMessage] = useState<boolean>(false);
@@ -52,8 +54,14 @@ const UserProfilePage: React.FC = () => {
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (editedUser) {
-            setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        if (isEditing && editedUser) {
+            setEditedUser({ ...editedUser, [name]: value });
+        }
+
+        if (isEditingAddressInfo && editedUserAddressInfo) {
+            setEditedUserAddressInfo({ ...editedUserAddressInfo, [name]: value });
         }
     };
 
@@ -103,7 +111,12 @@ const UserProfilePage: React.FC = () => {
                     </div>
 
                     <div className="action-bubble">
-                        <button onClick={() => setIsEditing(true)}>Edit</button>
+                        <button onClick={() => {
+                            if (user) {
+                                setEditedUser(user);
+                                setIsEditing(true);
+                            }
+                        }}>Edit</button>
                         <button onClick={deleteUser} className="delete-btn">Delete</button>
                     </div>
                 </div>
@@ -119,6 +132,16 @@ const UserProfilePage: React.FC = () => {
                         <p><strong>City:</strong> {user.city || '—'}</p>
                         <p><strong>Postal Code:</strong> {user.postalCode || '—'}</p>
                         <p><strong>State:</strong> {user.state || '—'}</p>
+                    </div>
+                    <div className="action-bubble">
+                        <button onClick={() => {
+                            if (user) {
+                                setEditedUserAddressInfo(user);
+                                setIsEditingAddressInfo(true);
+                            }
+                        }}>Edit
+                        </button>
+                        <button onClick={deleteUser} className="delete-btn">Delete</button>
                     </div>
                 </div>
 
@@ -140,25 +163,62 @@ const UserProfilePage: React.FC = () => {
                 </div>
             </section>
 
-            {/* === Edit Bubble === */}
-            {isEditing && (
+            {/* === Edit Bubble For My Information=== */}
+            {isEditing && editedUser && (
                 <div className="edit-bubble">
-                <h3>Edit Information</h3>
+                    <h3>Edit Information</h3>
                     <label>
-                        Full Name: <input type="text" name="name" value={editedUser?.name || ''} onChange={handleInputChange} />
+                        Full Name: <input type="text" name="name" value={editedUser.name} onChange={handleInputChange} />
                     </label>
                     <label>
-                        Last Name: <input type="text" name="lastName" value={editedUser?.lastName || ''} onChange={handleInputChange} />
+                        Last Name: <input type="text" name="lastName" value={editedUser.lastName} onChange={handleInputChange} />
                     </label>
                     <label>
-                        Email: <input type="text" name="email" value={editedUser?.email || ''} onChange={handleInputChange} />
+                        Email: <input type="text" name="email" value={editedUser.email} onChange={handleInputChange} />
                     </label>
                     <label>
-                        Username: <input type="text" name="username" value={editedUser?.username || ''} onChange={handleInputChange} />
+                        Username: <input type="text" name="username" value={editedUser.username} onChange={handleInputChange} />
                     </label>
                     <div className="edit-actions">
                         <button onClick={saveChanges}>Save</button>
                         <button onClick={() => setIsEditing(false)}>Cancel</button>
+                    </div>
+                </div>
+            )}
+
+
+            {/* Edit Bubble for Address Information */}
+            {isEditingAddressInfo && editedUserAddressInfo && (
+                <div className="edit-bubble">
+                    <h3>Edit Address Information</h3>
+                    <label>
+                        Phone: <input type="text" name="phone" value={editedUserAddressInfo.phone || ''} onChange={handleInputChange} />
+                    </label>
+                    <label>
+                        Address: <input type="text" name="address" value={editedUserAddressInfo.address || ''} onChange={handleInputChange} />
+                    </label>
+                    <label>
+                        City: <input type="text" name="city" value={editedUserAddressInfo.city || ''} onChange={handleInputChange} />
+                    </label>
+                    <label>
+                        Postal Code: <input type="text" name="postalCode" value={editedUserAddressInfo.postalCode || ''} onChange={handleInputChange} />
+                    </label>
+                    <label>
+                        State: <input type="text" name="state" value={editedUserAddressInfo.state || ''} onChange={handleInputChange} />
+                    </label>
+                    <div className="edit-actions">
+                        <button onClick={async () => {
+                            if (editedUserAddressInfo) {
+                                try {
+                                    await api.put(`User/${editedUserAddressInfo.id}`, editedUserAddressInfo);
+                                    setUser(editedUserAddressInfo);
+                                    setIsEditingAddressInfo(false);
+                                } catch (err) {
+                                    alert('Failed to save changes.');
+                                }
+                            }
+                        }}>Save</button>
+                        <button onClick={() => setIsEditingAddressInfo(false)}>Cancel</button>
                     </div>
                 </div>
             )}

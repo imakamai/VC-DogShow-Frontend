@@ -8,16 +8,39 @@ const Navbar: React.FC = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("jwtToken"));
 
-
     useEffect(() => {
-        const checkLoginStatus = () => {
+        const checkLoginStatus = async () => {
+            const token = localStorage.getItem("jwtToken");
+            if (token) {
+                try {
+                    // Simulate token verification (replace with actual API call if needed)
+                    const response = await fetch('/auth/verify', {
+                        method: 'GET',
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    if (response.ok) {
+                        setIsLoggedIn(true);
+                    } else {
+                        localStorage.removeItem("jwtToken");
+                        setIsLoggedIn(false);
+                    }
+                } catch {
+                    localStorage.removeItem("jwtToken");
+                    setIsLoggedIn(false);
+                }
+            }
+        };
+
+        checkLoginStatus();
+
+        const handleStorageChange = () => {
             setIsLoggedIn(!!localStorage.getItem("jwtToken"));
         };
 
-        window.addEventListener('storage', checkLoginStatus);
+        window.addEventListener('storage', handleStorageChange);
 
         return () => {
-            window.removeEventListener('storage', checkLoginStatus);
+            window.removeEventListener('storage', handleStorageChange);
         };
     }, []);
 
@@ -91,14 +114,15 @@ const Navbar: React.FC = () => {
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="informationDropdown">
                             <li>
+                                <Link className="dropdown-item" to="/about">About Us</Link>
+                            </li>
+                            <li>
                                 <Link className="dropdown-item" to="/dogform">Dog Form</Link>
                             </li>
                             <li>
                                 <Link className="dropdown-item" to="/pricelist">Service Price List</Link>
                             </li>
-                            <li>
-                                <Link className="dropdown-item" to="/about">About</Link>
-                            </li>
+
                             <li>
                                 <Link className="dropdown-item" to="/contact">Contact</Link>
                             </li>
