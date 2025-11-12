@@ -1,6 +1,6 @@
 .user-profile-page {
     font-family: Arial, sans-serif;
-    background-color: #fff;
+    background-color: #f5eade;
     /*padding-bottom: 60px;*/
 }
 
@@ -164,22 +164,100 @@
     padding-bottom: 4px;
 }
 
+/* === EDIT BUBBLE === */
+/* === EDIT BUBBLE === */
 .edit-bubble {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(180deg, #ece0cd, #b8b0a3); /* Match the gradient style */
+    padding: 25px 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Softer shadow */
     z-index: 1000;
+    color: #5a4b3a; /* Match text color */
+    font-family: Arial, sans-serif;
 }
+
+.edit-bubble h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #5a4b3a; /* Match heading color */
+    text-align: center;
+}
+
+.edit-bubble label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #5a4b3a;
+}
+
+.edit-bubble input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #d9cdbf;
+    border-radius: 10px;
+    background-color: #f5f3ee;
+    color: #5a4b3a;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.edit-bubble input:focus {
+    outline: none;
+    border-color: #b59e85;
+    box-shadow: 0 0 5px rgba(181, 158, 133, 0.5);
+}
+
 .edit-actions {
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    justify-content: center;
 }
+
+.edit-actions button {
+    background-color: #f5f3ee;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #5a4b3a;
+    transition: 0.3s;
+}
+
+.edit-actions button:hover {
+    background-color: #d9cdbf;
+}
+
+.edit-actions button:first-child {
+    background-color: #b59e85; /* Save button color */
+    color: white;
+}
+
+.edit-actions button:first-child:hover {
+    background-color: #a1886b;
+}
+
+/*.edit-bubble {*/
+/*    position: fixed;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*    background: white;*/
+/*    padding: 20px;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+/*    z-index: 1000;*/
+/*}*/
+/*.edit-actions {*/
+/*    margin-top: 10px;*/
+/*    display: flex;*/
+/*    gap: 10px;*/
+/*}*/
 
 /*.footer-section {*/
 /*    width: 100%;*/

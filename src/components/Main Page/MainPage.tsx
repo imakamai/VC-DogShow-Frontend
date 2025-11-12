@@ -5,7 +5,7 @@ import './MainPage.css';
 
 const MainPage: React.FC = () => {
     return (
-        <div>
+        <div className=" main-page">
             <Navbar />
             <div className="hero-container">
                 <Hero/>

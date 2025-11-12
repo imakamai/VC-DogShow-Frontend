@@ -1,9 +1,13 @@
+.hero{
+    background: #EAE2D3;
+}
+
 .hero-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 50px 80px;
-    background-color: #ffffff;
+    background-color: #f5eade;
     font-family: Arial, sans-serif;
     flex-wrap: wrap;
     width: 100%;
