@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="hero-right">
+                    <div className="hero-right" id="about">
                         <div className="about-box">
                             <h3>About us</h3>
                             <p>
@@ -69,12 +69,6 @@ const Hero: React.FC = () => {
                                 and training methodology.
                             </p>
                         </div>
-                    </div>
-                </section>
-
-                <section className="contact-section">
-                    <div className="contact-box">
-                        <h3>Contact</h3>
                     </div>
                 </section>
             </div>

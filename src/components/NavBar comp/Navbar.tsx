@@ -113,8 +113,11 @@ const Navbar: React.FC = () => {
                             Information
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="informationDropdown">
-                            <li>
-                                <Link className="dropdown-item" to="/about">About Us</Link>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/#about">About Us</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/#contact">Contact</Link>
                             </li>
                             <li>
                                 <Link className="dropdown-item" to="/dogform">Dog Form</Link>

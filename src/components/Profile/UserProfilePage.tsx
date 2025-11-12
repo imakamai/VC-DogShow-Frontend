@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import Navbar from '../NavBar comp/Navbar';
+import FooterPage from '../NavBar comp/FooterPage';
 import './UserProfilePage.css';
 
 interface User {
@@ -222,18 +223,7 @@ const UserProfilePage: React.FC = () => {
                     </div>
                 </div>
             )}
-
-            {/* === Footer === */}
-            {/*<section className="contact-section">*/}
-            {/*    <div className="contact-box">*/}
-            {/*        <h3>Contact</h3>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
-            <footer className="footer-section">
-                <div className="footer-box">
-                    <h3>Contact</h3>
-                </div>
-            </footer>
+            <FooterPage />
         </div>
     );
 };
