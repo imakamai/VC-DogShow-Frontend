@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
-import Navbar from '../NavBar comp/Navbar';
-import FooterPage from '../NavBar comp/FooterPage';
+import api from "../Services/api";
+import Navbar from '../Components For Pages/Navbar';
+import FooterPage from '../Components For Pages/FooterPage';
 import './UserProfilePage.css';
 
 interface User {

@@ -14,16 +14,19 @@
     padding: 0.5rem 1rem;
 }
 
+/* General nav-link styling */
 .nav-link {
     color: #3f3e40 !important;
     padding: 0.5rem 1rem;
     transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
     border-radius: 0.25rem;
+    text-align: center;
 }
 
+/* Hover effect for nav-link */
 .nav-link:hover {
     color: #2c2c2c !important;
-    background-color: #c2b9a9;
+    background-color: #c7bdad;
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -46,15 +49,19 @@
     background-color: #ffffff;
 }
 
+
+/* Dropdown item styling */
 .dropdown-item {
-    color: #4a5568 !important;
+    color: #383a42 !important;
     padding: 0.5rem 1rem;
     transition: background-color 0.2s ease-in-out;
+    text-align: center;
 }
 
+/* Hover effect for dropdown-item */
 .dropdown-item:hover {
     background-color: #e8e8e8;
-    color: #4a4a4a !important;
+    color: #60595a !important;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -144,3 +151,5 @@
         margin-right: 0.25rem;
     }
 }
+
+

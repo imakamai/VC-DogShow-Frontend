@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../services/api";
+import api from "../Services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginPage: React.FC = () => {

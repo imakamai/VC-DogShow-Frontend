@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../NavBar comp/Navbar';
-import Hero from '../NavBar comp/Hero';
-import FooterPage from '../NavBar comp/FooterPage';
+import Navbar from '../Components For Pages/Navbar';
+import Hero from '../Components For Pages/Hero';
+import FooterPage from '../Components For Pages/FooterPage';
 import './MainPage.css';
 
 const MainPage: React.FC = () => {

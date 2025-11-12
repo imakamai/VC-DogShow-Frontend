@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../NavBar comp/Navbar";
+import Navbar from "../../Components For Pages/Navbar";
 
 interface PriceItem {
     service: string;
